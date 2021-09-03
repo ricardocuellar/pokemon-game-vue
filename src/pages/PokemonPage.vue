@@ -17,6 +17,14 @@
         <!-- En VUE 2 se pone en un div<div></div>-->
         <!-- Remember: Bracket only when we want send arguments if not only reference >-->
 
+        <template v-if="showAnswer">
+            <h2>{{message}}</h2>
+            <button @click="newGame">
+                Nuevo Juego
+            </button>
+
+        </template>
+
     </div>
 
     
@@ -42,6 +50,8 @@ export default {
             pokemonArr: [],
             pokemon: null,
             showPokemon: false,
+            showAnswer: false,
+            message: ''
         }
     },
     methods: {
@@ -50,8 +60,21 @@ export default {
             const rndInt = Math.floor(Math.random() * 4)
             this.pokemon = this.pokemonArr[ rndInt ]
         },
-        checkAnswer(pokemonId){
+        checkAnswer(selectedId){
             this.showPokemon = true
+            this.showAnswer = true
+            if( selectedId === this.pokemon.id ){
+                this.message = `Correcto, ${this.pokemon.name}`
+            }else{
+                this.message = `Oops, era ${this.pokemon.name}`
+            }
+
+        },
+        newGame(){
+            this.pokemon = null
+            this.showPokemon = false
+            this.showAnswer = false
+            this.mixPokemonArray()
         }
     },
     mounted(){
