@@ -4,11 +4,18 @@
     <div v-else>
         <h1>¿Quién es este pokémon?</h1>
         <!--TODO img-->
-        <PokemonPicture :pokemonId="pokemon.id" :showPokemon="showPokemon" />
+        <!--We can use  CamelCase or Kebab-Case for components tags and attributes both are correct-->
+        <PokemonPicture 
+            :pokemon-id="pokemon.id" 
+            :show-pokemon="showPokemon" />
 
-        <PokemonOptions :pokemons="pokemonArr"/>
+        <PokemonOptions 
+            :pokemons="pokemonArr"
+            @selection-pokemon="checkAnswer"
+            />
         <!--TODO opciones-->
         <!-- En VUE 2 se pone en un div<div></div>-->
+        <!-- Remember: Bracket only when we want send arguments if not only reference >-->
 
     </div>
 
@@ -42,6 +49,9 @@ export default {
             this.pokemonArr = await getPokemonOptions()
             const rndInt = Math.floor(Math.random() * 4)
             this.pokemon = this.pokemonArr[ rndInt ]
+        },
+        checkAnswer(pokemonId){
+            this.showPokemon = true
         }
     },
     mounted(){
