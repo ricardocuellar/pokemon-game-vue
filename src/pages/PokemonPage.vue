@@ -3,7 +3,7 @@
     <!--TODO img-->
     <PokemonPicture :pokemonId="150" :showPokemon="false" />
 
-    <PokemonOptions />
+    <PokemonOptions :pokemons="pokemonArr"/>
     <!--TODO opciones-->
     <!-- En VUE 2 se pone en un div<div></div>-->
 </template>
@@ -22,7 +22,22 @@ export default {
     components: {
         PokemonPicture,
         PokemonOptions
+    },
+    data(){
+        return {
+            pokemonArr: []
+        }
+    },
+    methods: {
+        async mixPokemonArray() {
+            this.pokemonArr = await getPokemonOptions()
+        }
+    },
+    mounted(){
+        this.mixPokemonArray()
     }
+
+    //Handler and target is reactive property or object
     
 }
 </script>
